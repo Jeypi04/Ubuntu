@@ -39,7 +39,7 @@ cp /etc/openvpn/easy-rsa/keys/server.crt /etc/openvpn/server.crt
 cp /etc/openvpn/easy-rsa/keys/server.key /etc/openvpn/server.key
 cp /etc/openvpn/easy-rsa/keys/ca.crt /etc/openvpn/ca.crt
 cat > /etc/openvpn/server.conf <<-END
-port 110
+port 443
 proto tcp
 dev tun
 ca ca.crt
@@ -67,7 +67,7 @@ cat > /root/SUN-NOLOAD.ovpn <<-END
 client
 dev tun
 proto tcp-client
-remote $IPADDRESS 110
+remote $IPADDRESS 443
 persist-key
 persist-tun
 bind
@@ -94,7 +94,7 @@ cat > /root/SMART-TNT-NOLOAD.ovpn <<-END
 client
 dev tun
 proto tcp-client
-remote $IPADDRESS 110
+remote $IPADDRESS 443
 persist-key
 persist-tun
 remote-cert-tls server
@@ -121,7 +121,7 @@ cat > /root/SUN-TU200.ovpn <<-END
 client
 dev tun
 proto tcp-client
-remote $IPADDRESS 110
+remote $IPADDRESS 443
 persist-key
 persist-tun
 remote-cert-tls server
@@ -152,7 +152,7 @@ cat > /root/DEFAULT-NO-PROXY.ovpn <<-END
 client
 dev tun
 proto tcp-client
-remote $IPADDRESS 110
+remote $IPADDRESS 443
 persist-key
 persist-tun
 remote-cert-tls server
@@ -176,7 +176,7 @@ cat > /root/DEFAULT-WITH-PROXY.ovpn <<-END
 client
 dev tun
 proto tcp-client
-remote $IPADDRESS 110
+remote $IPADDRESS 443
 persist-key
 persist-tun
 remote-cert-tls server
@@ -201,7 +201,7 @@ cat > /root/SUN-CTC50-TU50-FLP.ovpn <<-END
 client
 dev tun
 proto tcp-client
-remote $IPADDRESS 110
+remote $IPADDRESS 443
 persist-key
 persist-tun
 remote-cert-tls server
@@ -228,7 +228,7 @@ cat > /root/GLOBE-GOWATCH-SUN-FREEYOUTUBE.ovpn <<-END
 client
 dev tun
 proto tcp-client
-remote $IPADDRESS 110
+remote $IPADDRESS 443
 persist-key
 persist-tun
 remote-cert-tls server
@@ -274,7 +274,7 @@ COMMIT
 -A INPUT -p tcp -m tcp --dport 53 -j ACCEPT
 -A INPUT -p tcp --dport 22 -m state --state NEW -j ACCEPT
 -A INPUT -p tcp --dport 80 -m state --state NEW -j ACCEPT
--A INPUT -p tcp --dport 110 -m state --state NEW -j ACCEPT
+-A INPUT -p tcp --dport 443 -m state --state NEW -j ACCEPT
 -A INPUT -p tcp --dport 8080 -m state --state NEW -j ACCEPT
 COMMIT
 
@@ -307,7 +307,7 @@ ln -fs /usr/share/zoneinfo/Asia/Manila /etc/localtime
 echo \> Configuring Uncomplicated Firewall...
 ufw allow ssh
 ufw allow 80/tcp
-ufw allow 110/tcp
+ufw allow 443/tcp
 ufw allow 8080/tcp
 sed -i 's|DEFAULT_INPUT_POLICY="DROP"|DEFAULT_INPUT_POLICY="ACCEPT"|' /etc/default/ufw
 sed -i 's|DEFAULT_FORWARD_POLICY="DROP"|DEFAULT_FORWARD_POLICY="ACCEPT"|' /etc/default/ufw
@@ -404,7 +404,7 @@ echo
 echo \> VPS Open Ports
 echo OpenSSH Port: 22
 echo Micro HTTPD: 80
-echo OpenVPN Port: 110
+echo OpenVPN Port: 443
 echo Privoxy Port: 8080
 echo
 sleep 1
